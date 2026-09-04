@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Diagnóstico da Turma | Engenharia Econômica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">
+          <span class="brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15 7H21V13" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Engenharia Econômica
+        </a>
+        <button class="navbar-toggle" id="navToggle" aria-label="Abrir menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="navbar-links" id="navLinks">
+          <a href="index.html">Formulário</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="sobre.html">Sobre o projeto</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="container">
+        <header class="page-header">
+          <div class="section-header">
+            <div>
+              <span class="eyebrow">Área do professor</span>
+              <h1>Dashboard — Diagnóstico da Turma</h1>
+              <p>Visão consolidada das dificuldades relatadas pelos alunos, atualizada automaticamente a cada nova resposta.</p>
+            </div>
+          </div>
+
+          <div class="dashboard-toolbar">
+            <button class="btn btn-secondary btn-sm" id="btnLoadDemo">
+              🧪 Carregar dados de demonstração
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btnRemoveDemo" style="display:none;">
+              🧹 Remover dados de demonstração
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btnExport">
+              ⬇️ Exportar dados (CSV)
+            </button>
+            <button class="btn btn-danger btn-sm" id="btnClear">
+              🗑️ Limpar dados
+            </button>
+          </div>
+
+          <div class="demo-banner" id="demoBanner">
+            ⚠️ Este dashboard está exibindo <strong>dados fictícios de demonstração</strong> misturados (ou não) com respostas reais. Use "Remover dados de demonstração" para ver apenas respostas reais.
+          </div>
+        </header>
+
+        <!-- Filtros -->
+        <div class="card filters-card">
+          <div class="filter-field">
+            <label for="filterTema">Tema</label>
+            <select id="filterTema">
+              <option value="">Todos os temas</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="filterNivel">Nível de dificuldade</label>
+            <select id="filterNivel">
+              <option value="">Todos os níveis</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="filterDataInicio">De</label>
+            <input type="date" id="filterDataInicio" />
+          </div>
+          <div class="filter-field">
+            <label for="filterDataFim">Até</label>
+            <input type="date" id="filterDataFim" />
+          </div>
+          <div class="filter-field">
+            <button class="btn btn-secondary btn-sm" id="btnClearFilters" style="width:100%;">Limpar filtros</button>
+          </div>
+        </div>
+
+        <div id="dashboardContent">
+          <!-- KPIs -->
+          <section class="kpi-grid">
+            <div class="kpi-card">
+              <span class="kpi-icon">📊</span>
+              <span class="kpi-label">Total de respostas</span>
+              <span class="kpi-value" id="kpiTotal">0</span>
+              <span class="kpi-sub">respostas registradas</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-icon">🎓</span>
+              <span class="kpi-label">Alunos únicos</span>
+              <span class="kpi-value" id="kpiAlunos">0</span>
+              <span class="kpi-sub">matrículas distintas</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-icon">🔥</span>
+              <span class="kpi-label">Tema com maior dificuldade</span>
+              <span class="kpi-value" id="kpiTemaTop" style="font-size:1.05rem;">—</span>
+              <span class="kpi-sub" id="kpiTemaTopSub">—</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-icon">⚖️</span>
+              <span class="kpi-label">Nível predominante</span>
+              <span class="kpi-value" id="kpiNivelTop" style="font-size:1.05rem;">—</span>
+              <span class="kpi-sub" id="kpiNivelTopSub">—</span>
+            </div>
+          </section>
+
+          <!-- Gráficos -->
+          <section class="charts-grid">
+            <div class="card">
+              <h2 class="card-title">Quantidade de alunos com dificuldade por tema</h2>
+              <p class="card-subtitle">Ordenado do tema com maior para o menor número de indicações.</p>
+              <div class="chart-wrap">
+                <canvas id="chartTemas"></canvas>
+              </div>
+            </div>
+            <div class="card">
+              <h2 class="card-title">Nível de dificuldade da turma</h2>
+              <p class="card-subtitle">Distribuição das respostas por nível geral.</p>
+              <div class="chart-wrap chart-wrap-sm">
+                <canvas id="chartNiveis"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <!-- Ranking -->
+          <section class="section card">
+            <h2 class="card-title">Ranking de dificuldades</h2>
+            <p class="card-subtitle">Calculado dinamicamente a partir das respostas filtradas.</p>
+            <div class="table-wrap">
+              <table class="ranking-table">
+                <thead>
+                  <tr>
+                    <th>Posição</th>
+                    <th>Tema</th>
+                    <th>Alunos</th>
+                    <th>% da turma</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="rankingBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Prioridades -->
+          <section class="section">
+            <div class="section-header">
+              <div>
+                <h2 class="card-title" style="margin-bottom:2px;">Prioridades para produção de material</h2>
+                <p class="card-subtitle" style="margin-bottom:0;">Classificação automática com base no percentual de alunos que indicaram dificuldade em cada tema.</p>
+              </div>
+            </div>
+            <div class="priority-grid">
+              <div class="priority-card priority-alta">
+                <h3>🔴 Alta prioridade</h3>
+                <p class="priority-desc">Temas indicados por uma grande parte da turma.</p>
+                <div id="priorityAlta"></div>
+              </div>
+              <div class="priority-card priority-media">
+                <h3>🟡 Média prioridade</h3>
+                <p class="priority-desc">Temas com quantidade intermediária de dificuldades.</p>
+                <div id="priorityMedia"></div>
+              </div>
+              <div class="priority-card priority-baixa">
+                <h3>🟢 Baixa prioridade</h3>
+                <p class="priority-desc">Temas com poucas indicações.</p>
+                <div id="priorityBaixa"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Comentários -->
+          <section class="section card">
+            <h2 class="card-title">Comentários e solicitações dos alunos</h2>
+            <p class="card-subtitle">Matrículas parcialmente mascaradas para preservar a privacidade dos alunos.</p>
+            <div class="comments-grid" id="commentsGrid"></div>
+          </section>
+        </div>
+
+        <!-- Estado vazio -->
+        <div class="card empty-state" id="emptyState" style="display:none; margin-top:24px;">
+          <div class="empty-icon">📭</div>
+          <h3>Nenhuma resposta encontrada</h3>
+          <p>Ainda não há respostas registradas (ou nenhuma corresponde aos filtros aplicados). Peça aos alunos para preencherem o formulário ou carregue dados de demonstração para explorar o dashboard.</p>
+          <button class="btn btn-primary btn-sm" id="btnLoadDemoEmpty">🧪 Carregar dados de demonstração</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Diagnóstico de Dificuldades — Engenharia Econômica · Protótipo acadêmico
+    </footer>
+  </div>
+
+  <!-- Modal de confirmação -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-box">
+      <h3 id="confirmTitle">Confirmar ação</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary btn-sm" id="confirmCancel">Cancelar</button>
+        <button class="btn btn-danger btn-sm" id="confirmOk">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

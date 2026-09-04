@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnóstico de Dificuldades — Engenharia Econômica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">
+          <span class="brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15 7H21V13" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Engenharia Econômica
+        </a>
+        <button class="navbar-toggle" id="navToggle" aria-label="Abrir menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="navbar-links" id="navLinks">
+          <a href="index.html">Formulário</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="sobre.html">Sobre o projeto</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="container">
+        <header class="page-header">
+          <span class="eyebrow">Diagnóstico da turma</span>
+          <h1>Diagnóstico de Dificuldades — Engenharia Econômica</h1>
+          <p>
+            Este formulário tem como objetivo identificar os conteúdos de Engenharia Econômica que
+            apresentam maior dificuldade para os alunos. Suas respostas serão utilizadas para orientar
+            a produção de materiais de apoio, aulas de revisão e exercícios. Não solicitamos nome, e-mail
+            ou qualquer outro dado pessoal — apenas sua matrícula, usada como identificador da resposta.
+          </p>
+        </header>
+
+        <form id="diagnosticoForm" class="card form-card" novalidate>
+          <!-- Matrícula -->
+          <div class="form-section">
+            <h2 class="form-section-title">Matrícula</h2>
+            <p class="form-section-hint">Utilizada apenas como identificador da resposta. Nenhum outro dado pessoal é coletado.</p>
+            <div class="matricula-input-wrap">
+              <input type="text" id="matricula" name="matricula" placeholder="Digite sua matrícula" autocomplete="off" />
+              <div class="field-error-msg" id="matriculaError">Informe sua matrícula para enviar a resposta.</div>
+            </div>
+          </div>
+
+          <!-- Temas -->
+          <div class="form-section">
+            <h2 class="form-section-title">Em quais conteúdos você está tendo maior dificuldade?</h2>
+            <p class="form-section-hint">Selecione um ou mais temas.</p>
+            <div class="theme-grid" id="themeGrid"></div>
+            <div class="field-error-msg" id="temasError">Selecione pelo menos um tema.</div>
+          </div>
+
+          <!-- Nível de dificuldade -->
+          <div class="form-section">
+            <h2 class="form-section-title">Como você avalia sua dificuldade nesses conteúdos?</h2>
+            <p class="form-section-hint">Escolha o nível que melhor representa sua dificuldade geral.</p>
+            <div class="difficulty-grid" id="difficultyGrid"></div>
+            <div class="field-error-msg" id="nivelError">Selecione um nível de dificuldade.</div>
+          </div>
+
+          <!-- Comentário -->
+          <div class="form-section">
+            <h2 class="form-section-title">Existe algum conteúdo ou tipo de exercício que você gostaria que fosse melhor explicado?</h2>
+            <p class="form-section-hint">Campo opcional.</p>
+            <textarea id="comentario" name="comentario" placeholder="Conte aqui qual assunto, tipo de exercício ou parte da matéria está gerando dificuldade..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Enviar resposta
+            </button>
+            <span class="text-muted" style="font-size:0.85rem;">Suas respostas são anônimas em relação à sua identidade.</span>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      Diagnóstico de Dificuldades — Engenharia Econômica · Protótipo acadêmico
+    </footer>
+  </div>
+
+  <div class="toast" id="successToast">
+    <span class="toast-icon">✅</span>
+    <div>
+      <strong>Resposta registrada com sucesso!</strong>
+      <p>Obrigado por contribuir com o diagnóstico da turma.</p>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
