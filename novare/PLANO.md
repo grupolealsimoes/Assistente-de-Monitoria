@@ -3,6 +3,13 @@
 > Etapa de planejamento, sem código. Nada aqui foi construído ainda.
 > Versão 2, de 15/10/2026: inclui o gerador (`Sistema.html`), o `CRITICAS.md` e a logo.
 > Status: **aguardando sua aprovação e as respostas da seção 8.**
+>
+> **Respostas já recebidas (15/10/2026):**
+> - P1: era erro de digitação. O módulo 1 é o gerador de **propostas e contratos de serviços contábeis**.
+> - P2: criação do repositório privado `novare-sistema` **autorizada**.
+> - P3: a equipe usa **e-mail com domínio próprio** (`@novarecontabilidade.com`). Login por **código de 6 dígitos enviado ao e-mail**
+>   (o "Entrar com Google" só valeria se esse e-mail fosse Google Workspace; ver a pergunta 11). Falta a lista de e-mails.
+> - P4: o formulário de novos clientes é um **Google Forms que alimenta uma planilha**. Aguardando o envio.
 
 ---
 
@@ -16,7 +23,7 @@
 | Gerador ("Produção de contratos") | `Sistema.html` | ✅ Ver a seção 2.3. ⚠️ **Gera propostas e contratos de serviços contábeis, não contratos de moto** (pergunta 1) |
 | Críticas | `CRITICAS.md` | ✅ Ver a seção 3 |
 | Logo | `novare_logo_fundo_transparente.svg` | ⚠️ É uma **imagem PNG "embrulhada" num arquivo SVG**, não um desenho vetorial de verdade (ver a seção 2.4) |
-| Formulário de novos clientes | — | ⏳ Ainda não recebido (ver a seção 5 e a pergunta 4) |
+| Formulário de novos clientes | Google Forms → planilha | ⏳ Aguardando as perguntas do formulário e o modelo da planilha (sem dados reais) |
 
 ---
 
@@ -222,7 +229,7 @@ Ainda não vi o formulário (pergunta 4). Sem ele, já dá para adiantar as duas
 
 | Opção | Como fica | Prós | Contras |
 |---|---|---|---|
-| **A. Manter o formulário atual** (ex.: Google Forms) e só colocar um link no site | Nada muda | Zero trabalho | Dados ficam espalhados; é preciso redigitar tudo no gerador |
+| **A. Manter o Google Forms atual** e só colocar um link no site | Nada muda | Zero trabalho | Dados ficam espalhados; é preciso redigitar tudo no gerador |
 | **B. Formulário próprio no site** (ex.: `/cadastro`) → os dados caem num **módulo "Novos clientes"** no `/sistema` → botão **"Gerar proposta"** já preenche o gerador | Fluxo único: o cliente preenche, você revisa e gera a proposta em 1 clique | Exige guardar dados pessoais no servidor (Cloudflare D1), com aviso de privacidade, consentimento e prazo de exclusão. É o primeiro módulo "com banco de dados" |
 
 **Recomendação inicial:** **B**, como **módulo 2**, depois do gerador estar estável. Ele reaproveita o formato das "fichas" que o
