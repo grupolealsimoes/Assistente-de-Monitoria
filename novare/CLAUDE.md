@@ -42,13 +42,20 @@ Regras:
    não só para esconder o item do menu.
 5. Todo módulo novo precisa de testes e de um `LEIAME.md` antes de ser entregue.
 
-### Gerador de contratos de moto (módulo `contrato-moto`)
-- É o módulo 1, e **já funciona**. Preserve a lógica dele. Antes de qualquer alteração, crie
-  **testes de referência**: com dados fictícios fixos, gere os contratos na versão original e guarde
-  o resultado. Toda mudança precisa gerar contratos **idênticos**. Se aparecer diferença, pare e pergunte.
-- Não "melhore" o texto jurídico do contrato sem pedido explícito.
+### Módulo 1: gerador de propostas e contratos (`propostas-contratos`)
+- Origem: `Sistema.html` (pasta "PRODUÇÃO DE CONTRATOS" do escritório). Gera a proposta e o contrato de
+  **serviços contábeis** (PJ, PF, MEI). É HTML + JavaScript puro, roda no navegador e gera o PDF pela impressão.
+- **Já funciona. Preserve a lógica.** Antes de qualquer alteração, crie **testes de referência**: fichas `.json`
+  fictícias (PJ, PF, MEI, com e sem desconto, com avulsos) → guarde o HTML do documento (`#paper`) que a versão
+  original gera. Toda mudança precisa gerar documentos **idênticos**. Se aparecer diferença, pare e pergunte.
+- Na migração, só pode mudar o que vem de fora: pdf.js (passa a ficar no próprio sistema, não no cdnjs), fontes
+  (no próprio sistema, não no Google Fonts) e a logo (arquivo da marca).
+- Mantenha o formato das fichas (`{v:2, mode, data}`) compatível. As fichas antigas do Drive precisam continuar abrindo.
+- As fichas ficam na pasta FICHAS do Google Drive (File System Access API). **Não** mova as fichas para o servidor sem aprovação.
+- Não "melhore" o texto jurídico, os valores padrão (`CFG`) nem o visual do documento impresso sem pedido explícito.
 
 ## Identidade visual
+- Logo: hoje só existe em PNG (o "SVG" enviado é um PNG embutido). Use o vetorial original quando o escritório enviar.
 - Cores (tokens em `src/marca`; não use cores hexadecimais soltas no código dos módulos):
   - Verde Novare (principal): `#0F5A38`. Variações: `#0B4A2E` (escuro), `#17663F`, `#3F7644`, `#4E8447`
   - Oliva (destaque): `#6E8F4A`. Fundos claros: `#EDF1E9` (mist), `#EEF3E7`, bordas `#CBD8C0` / `#D9E3CE`
@@ -56,6 +63,8 @@ Regras:
   - Degradê de marca: `linear-gradient(135deg, #0F5A38, #6E8F4A)`
 - Fontes (salvas no próprio site, sem Google Fonts nem CDN): **Inter** (texto, 400–700) e
   **Cormorant Garamond** (títulos, 500–600).
+- O gerador antigo usa outra paleta (`#073D2C`, `#315D3B`, `#78945A`) e a fonte Montserrat no documento impresso. A tela do
+  sistema segue a paleta acima; o documento impresso só muda com aprovação.
 - Visual: cantos arredondados, sombras suaves, bastante espaço em branco, ícones de traço (stroke).
 - **Responsivo sempre:** teste em 360px (celular) e 1280px (computador). Sem rolagem lateral.
 - Respeite `prefers-reduced-motion`. O painel `/sistema` deve ser sóbrio, sem animações decorativas.
@@ -76,6 +85,9 @@ Regras:
 - Logs registram **quem acessou e quando**, nunca o conteúdo dos contratos.
 - Repositório do sistema: **privado**.
 - Todo recurso de terceiros no site público (ex.: Featurable, Google Maps) deve constar na política de privacidade.
+- Analytics/Pixel: só no site público, só depois do consentimento no aviso de cookies.
+- Dados do escritório (razão social, CNPJ, CRC, endereço, telefone, horário) ficam num **único arquivo de configuração**
+  compartilhado pelo site e pelos módulos. Nunca os repita à mão em vários lugares.
 
 ## Antes de entregar qualquer fase
 - Rode o build e os testes. Todos precisam passar.
