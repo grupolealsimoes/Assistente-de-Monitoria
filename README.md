@@ -190,3 +190,11 @@ Antes da entrega, a aplicação foi testada de ponta a ponta com um navegador au
 - Exportação também em Excel (.xlsx) ou PDF.
 - Histórico/comparação entre diferentes turmas ou semestres.
 - Internacionalização (hoje os textos estão fixos em português).
+
+---
+
+## Outro projeto neste repositório: LesteShop
+
+A pasta [`lesteshop/`](lesteshop/README.md) contém a Fase 1 do **LesteShop** (Pesquisa
+Operacional II): a base de ofertas de Ciudad del Este, em Python. Veja o
+[README do LesteShop](lesteshop/README.md).
